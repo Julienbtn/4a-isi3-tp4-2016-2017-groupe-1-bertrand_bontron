@@ -19,40 +19,41 @@ import java.util.Observer;
  */
 
 public class FeuilleDessin extends JPanel {
-	private ArrayList<TortueVue> tortues; // la liste des tortues enregistrees
+	private ArrayList<TortueVue> tortuesList; // la liste des tortues enregistrees
 	
 	public FeuilleDessin() {
-		tortues = new ArrayList<TortueVue>();
+		tortuesList = new ArrayList<TortueVue>();
 	}
 
-	public void addTortue(Tortue o) {
-		tortues.add(new TortueVue(o));
+	public void addTortue(Tortue tortue) {
+		tortuesList.add(new TortueVue(tortue));
 	}
 
 	public void reset() {
-		for (Iterator it = tortues.iterator();it.hasNext();) {
-			Tortue t = (Tortue) it.next();
-			t.reset();
+		for (Iterator iterateur = tortuesList.iterator();iterateur.hasNext();) {
+			TortueVue tortueVue = (TortueVue) iterateur.next();
+			tortueVue.tortue.reset();
 		}
 	}
+
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		Color c = g.getColor();
+		Color couleur = g.getColor();
 		
-		Dimension dim = getSize();
+		Dimension dimension = getSize();
 		g.setColor(Color.white);
-		g.fillRect(0,0,dim.width, dim.height);
-		g.setColor(c);
+		g.fillRect(0,0,dimension.width, dimension.height);
+		g.setColor(couleur);
 
 		showTurtles(g);
 	}
 	
 	public void showTurtles(Graphics g) {
-		for(Iterator it = tortues.iterator();it.hasNext();) {
-			TortueVue t = (TortueVue) it.next();
-			t.drawTurtle(g);
+		for(Iterator iterateur = tortuesList.iterator();iterateur.hasNext();) {
+			TortueVue tortueVue = (TortueVue) iterateur.next();
+			tortueVue.drawTurtle(g);
 		}
 	}
 

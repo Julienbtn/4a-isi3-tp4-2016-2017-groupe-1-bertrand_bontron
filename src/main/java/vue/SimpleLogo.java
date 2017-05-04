@@ -34,7 +34,7 @@ public class SimpleLogo extends JFrame implements Observer {
 	public static final Dimension HGAP = new Dimension(5,1);
 
 	private FeuilleDessin feuille;
-	private Tortue courante;
+	private Tortue tortueCourante;
 	private JTextField inputValue;
 	private Controleur controleur;
 
@@ -89,6 +89,7 @@ public class SimpleLogo extends JFrame implements Observer {
 		addButton(toolBar, "Gauche", "Gauche 45", null);
 		addButton(toolBar, "Lever", "Lever Crayon", null);
 		addButton(toolBar, "Baisser", "Baisser Crayon", null);
+		addButton(toolBar, "Ajouter","Ajouter Tortue" , null);
 
 		String[] colorStrings = {"noir", "bleu", "cyan","gris fonce","rouge",
 								 "vert", "gris clair", "magenta", "orange",
@@ -103,9 +104,9 @@ public class SimpleLogo extends JFrame implements Observer {
 
 		colorList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
-				int n = cb.getSelectedIndex();
-				courante.setColor(n);
+				JComboBox comboBox = (JComboBox)e.getSource();
+				int n = comboBox.getSelectedIndex();
+				tortueCourante.setColor(n);
 			}
 		});
 
@@ -128,6 +129,7 @@ public class SimpleLogo extends JFrame implements Observer {
 		addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
 		addMenuItem(menuCommandes, "Lever Crayon", "Lever", -1);
 		addMenuItem(menuCommandes, "Baisser Crayon", "Baisser", -1);
+		addMenuItem(menuCommandes, "Ajouter Tortue", "Ajouter", -1);
 
 		menubar.add(menuHelp);
 		addMenuItem(menuHelp, "Aide", "Help", -1);
@@ -164,7 +166,7 @@ public class SimpleLogo extends JFrame implements Observer {
 		// Deplacement de la tortue au centre de la feuille
 		tortue.setPosition(500/2, 400/2); 		
 		
-		courante = tortue;
+		tortueCourante = tortue;
 		feuille.addTortue(tortue);
 		controleur.setTortue(tortue);
 
@@ -174,13 +176,13 @@ public class SimpleLogo extends JFrame implements Observer {
 
 	public void setTortue(Tortue tortue){
 		feuille.addTortue(tortue);
-		courante = tortue;
+		tortueCourante = tortue;
 		tortue.addObserver(this);
 	}
 
 	public String getInputValue(){
-		String s = inputValue.getText();
-		return(s);
+		String texte = inputValue.getText();
+		return(texte);
 	}
 
 
@@ -190,45 +192,50 @@ public class SimpleLogo extends JFrame implements Observer {
 		feuille.repaint();
 
 		// Replace la tortue au centre
-		Dimension size = feuille.getSize();
-		courante.setPosition(size.width/2, size.height/2);
+		Dimension dimansion = feuille.getSize();
+		tortueCourante.setPosition(dimansion.width/2, dimansion.height/2);
+	}
+
+	public void ajouter(){
+		feuille.addTortue(new Tortue());
+		feuille.repaint();
 	}
 
 	//utilitaires pour installer des boutons et des menus
-	public void addButton(JComponent p, String name, String tooltiptext, String imageName) {
-		JButton b;
+	public void addButton(JComponent p, String nom, String tooltiptext, String imageName) {
+		JButton bouton;
 		if ((imageName == null) || (imageName.equals(""))) {
-			b = (JButton)p.add(new JButton(name));
+			bouton = (JButton)p.add(new JButton(nom));
 		}
 		else {
-			java.net.URL u = this.getClass().getResource(imageName);
-			if (u != null) {
-				ImageIcon im = new ImageIcon (u);
-				b = (JButton) p.add(new JButton(im));
+			java.net.URL url = this.getClass().getResource(imageName);
+			if (url != null) {
+				ImageIcon im = new ImageIcon (url);
+				bouton = (JButton) p.add(new JButton(im));
 			}
 			else
-				b = (JButton) p.add(new JButton(name));
-			b.setActionCommand(name);
+				bouton = (JButton) p.add(new JButton(nom));
+			bouton.setActionCommand(nom);
 		}
 
-		b.setToolTipText(tooltiptext);
-		b.setBorder(BorderFactory.createRaisedBevelBorder());
-		b.setMargin(new Insets(0,0,0,0));
-		b.addActionListener(controleur);
+		bouton.setToolTipText(tooltiptext);
+		bouton.setBorder(BorderFactory.createRaisedBevelBorder());
+		bouton.setMargin(new Insets(0,0,0,0));
+		bouton.addActionListener(controleur);
 	}
 
-	public void addMenuItem(JMenu m, String label, String command, int key) {
+	public void addMenuItem(JMenu menu, String texte, String command, int clef) {
 		JMenuItem menuItem;
-		menuItem = new JMenuItem(label);
-		m.add(menuItem);
+		menuItem = new JMenuItem(texte);
+		menu.add(menuItem);
 
 		menuItem.setActionCommand(command);
 		menuItem.addActionListener(controleur);
-		if (key > 0) {
-			if (key != KeyEvent.VK_DELETE)
-				menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
+		if (clef > 0) {
+			if (clef != KeyEvent.VK_DELETE)
+				menuItem.setAccelerator(KeyStroke.getKeyStroke(clef, Event.CTRL_MASK, false));
 			else
-				menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
+				menuItem.setAccelerator(KeyStroke.getKeyStroke(clef, 0, false));
 		}
 	}
 

@@ -29,22 +29,24 @@ public class Tortue extends Observable
 	
 	protected int x;
 	protected int y;
-	protected int dir;
-	protected int coul;
+	protected int direction;
+	protected int couleur;
 	
-	public void setColor(int n) {coul = n;}
-	public int getColor() {return coul;}
+	public void setColor(int n) {couleur= n;}
+	public int getColor() {return couleur;}
 
 	public Tortue() {
 		reset();
 	}
 
 
+
+
 	public void reset() {
 		x = 0;
 		y = 0;
-		dir = -90;
-		coul = 0;
+		direction= -90;
+		couleur= 0;
 		setChanged();
 		notifyObservers();
   	}
@@ -65,7 +67,7 @@ public class Tortue extends Observable
 	}
 
 	public int getDir() {
-		return dir;
+		return direction;
 	}
 
 	protected Color decodeColor(int c) {
@@ -87,8 +89,8 @@ public class Tortue extends Observable
 	}
 
 	public void avancer(int dist) {
-		int newX = (int) Math.round(x+dist*Math.cos(ratioDegRad*dir));
-		int newY = (int) Math.round(y+dist*Math.sin(ratioDegRad*dir));
+		int newX = (int) Math.round(x+dist*Math.cos(ratioDegRad*direction));
+		int newY = (int) Math.round(y+dist*Math.sin(ratioDegRad*direction));
 
 		x = newX;
 		y = newY;
@@ -97,24 +99,24 @@ public class Tortue extends Observable
 		notifyObservers();
 	}
 
-	public void droite(int ang) {
-		dir = (dir + ang) % 360;
+	public void droite(int angle) {
+		direction= (direction+angle) % 360;
 		setChanged();
 		notifyObservers();
 	}
 
-	public void gauche(int ang) {
-		dir = (dir - ang) % 360;
+	public void gauche(int angle) {
+		direction= (direction-angle) % 360;
 		setChanged();
 		notifyObservers();
 	}
 
 	public void couleur(int n) {
-		coul = n % 12;
+		couleur= n % 12;
 	}
 
 	public void couleurSuivante() {
-	 	couleur(coul+1);
+	 	couleur(couleur+1);
 	}
 
 	/** quelques classiques */
@@ -135,11 +137,13 @@ public class Tortue extends Observable
 
 	public void spiral(int n, int k, int a) {
 		for (int i = 0; i < k; i++) {
-			couleur(coul+1);
+			couleurSuivante();
 			avancer(n);
 			droite(360/a);
 			n = n+1;
 		}
 	}
+
+
 
 }

@@ -23,8 +23,8 @@ public class TortueVue{
 
         //Calcule les 3 coins du triangle a partir de
         // la position de la tortue p
-        Point p = new Point(tortue.getX(),tortue.getY());
-        Polygon arrow = new Polygon();
+        Point point = new Point(tortue.getX(),tortue.getY());
+        Polygon fleche = new Polygon();
 
         //Calcule des deux bases
         //Angle de la droite
@@ -36,19 +36,19 @@ public class TortueVue{
         //Sens de la fleche
 
         //Pointe
-        Point p2=new Point((int) Math.round(p.x+r*Math.cos(theta)),
-                (int) Math.round(p.y-r*Math.sin(theta)));
-        arrow.addPoint(p2.x,p2.y);
-        arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta + alpha) ),
-                (int) Math.round( p2.y+r*Math.sin(theta + alpha) ));
+        Point point2=new Point((int) Math.round(point.x+r*Math.cos(theta)),
+                (int) Math.round(point.y-r*Math.sin(theta)));
+        fleche.addPoint(point2.x,point2.y);
+        fleche.addPoint((int) Math.round( point2.x-r*Math.cos(theta + alpha) ),
+                (int) Math.round( point2.y+r*Math.sin(theta + alpha) ));
 
         //Base2
-        arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta - alpha) ),
-                (int) Math.round( p2.y+r*Math.sin(theta - alpha) ));
+        fleche.addPoint((int) Math.round( point2.x-r*Math.cos(theta - alpha) ),
+                (int) Math.round( point2.y+r*Math.sin(theta - alpha) ));
 
-        arrow.addPoint(p2.x,p2.y);
+        fleche.addPoint(point2.x,point2.y);
         g.setColor(Color.green);
-        g.fillPolygon(arrow);
+        g.fillPolygon(fleche);
     }
 
 }
