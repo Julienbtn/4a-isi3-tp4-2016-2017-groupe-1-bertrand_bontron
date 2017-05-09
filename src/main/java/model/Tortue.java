@@ -25,13 +25,16 @@ public class Tortue extends Observable
 
 	protected static final int rp=10, rb=5; // Taille de la pointe et de la base de la fleche
 	protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
-
+	private static final Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.red,
+			Color.green, Color.lightGray, Color.magenta, Color.orange, Color.gray,
+			Color.pink, Color.yellow};
 	
 	protected int x;
 	protected int y;
 	protected int direction;
 	protected int couleur;
-	
+
+
 	public void setColor(int n) {couleur= n;}
 	public int getColor() {return couleur;}
 
@@ -40,6 +43,11 @@ public class Tortue extends Observable
 	}
 
 
+	public Tortue(int x, int y) {
+		reset();
+		this.x = x;
+		this.y = y;
+	}
 
 
 	public void reset() {
@@ -71,21 +79,7 @@ public class Tortue extends Observable
 	}
 
 	protected Color decodeColor(int c) {
-		switch(c) {
-			case 0: return(Color.black);
-			case 1: return(Color.blue);
-			case 2: return(Color.cyan);
-			case 3: return(Color.darkGray);
-			case 4: return(Color.red);
-			case 5: return(Color.green);
-			case 6: return(Color.lightGray);
-			case 7: return(Color.magenta);
-			case 8: return(Color.orange);
-			case 9: return(Color.gray);
-			case 10: return(Color.pink);
-			case 11: return(Color.yellow);
-			default : return(Color.black);
-		}
+		return (c < colors.length) ? colors[c] : Color.black;
 	}
 
 	public void avancer(int dist) {

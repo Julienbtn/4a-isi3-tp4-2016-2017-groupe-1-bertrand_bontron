@@ -1,6 +1,7 @@
 package vue;// package logo;
 
 import control.Controleur;
+import model.Terrain;
 import model.Tortue;
 
 import javax.swing.*;
@@ -34,31 +35,18 @@ public class SimpleLogo extends JFrame implements Observer {
 	public static final Dimension HGAP = new Dimension(5,1);
 
 	private FeuilleDessin feuille;
-	private Tortue tortueCourante;
 	private JTextField inputValue;
 	private Controleur controleur;
 
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable(){
-		public void run(){
-			SimpleLogo fenetre = new SimpleLogo();
-			fenetre.setVisible(true);
-		}
-		});
-
-	}
 	
 	public void quitter() {
 		System.exit(0);
 	}
 
-	public SimpleLogo() {
+	public SimpleLogo(Terrain model, Controleur controleur) {
 		super("un logo tout simple");
-		this.controleur = new Controleur(this);
+		this.controleur = controleur;
 		logoInit();
 		addWindowListener(new WindowAdapter() {
 		    @Override
@@ -106,7 +94,6 @@ public class SimpleLogo extends JFrame implements Observer {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox comboBox = (JComboBox)e.getSource();
 				int n = comboBox.getSelectedIndex();
-				tortueCourante.setColor(n);
 			}
 		});
 
@@ -160,23 +147,12 @@ public class SimpleLogo extends JFrame implements Observer {
 		getContentPane().add(feuille,"Center");
 
 
-		// Creation de la tortue
-		Tortue tortue = new Tortue();
-
-		// Deplacement de la tortue au centre de la feuille
-		tortue.setPosition(500/2, 400/2); 		
-		
-		tortueCourante = tortue;
-		feuille.addTortue(tortue);
-		controleur.setTortue(tortue);
-
 		pack();
 		setVisible(true);
 	}
 
 	public void setTortue(Tortue tortue){
 		feuille.addTortue(tortue);
-		tortueCourante = tortue;
 		tortue.addObserver(this);
 	}
 
@@ -190,14 +166,9 @@ public class SimpleLogo extends JFrame implements Observer {
 	public void effacer() {
 		feuille.reset();
 		feuille.repaint();
-
-		// Replace la tortue au centre
-		Dimension dimansion = feuille.getSize();
-		tortueCourante.setPosition(dimansion.width/2, dimansion.height/2);
 	}
 
 	public void ajouter(){
-		feuille.addTortue(new Tortue());
 		feuille.repaint();
 	}
 
@@ -246,7 +217,6 @@ public class SimpleLogo extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable observable, Object o) {
-		System.out.println("Oh my god, something just happened");
 		this.repaint();
 	}
 }

@@ -1,87 +1,72 @@
 package control;
 
 
+import control.handler.ActionHandler;
+import model.Terrain;
 import model.Tortue;
 import vue.SimpleLogo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controleur implements ActionListener {
 
     private SimpleLogo vue;
-    private ArrayList<Tortue>tortuesList;
     private Tortue tortueCourante;
+    private Terrain terrain;
 
-    public Controleur(SimpleLogo vue){
-       tortuesList = new ArrayList<>();
-        this.vue = vue;
+    private HashMap<String, ActionHandler> actionsHandlers;
+
+
+
+    public Controleur(Terrain model){
+        actionsHandlers = new HashMap<>();
+        this.terrain = model;
     }
 
-    public void setTortue(Tortue tortue){
-       tortuesList.add(tortue);
-        tortueCourante = tortue;
+    public void addTortue(Tortue tortue){
+        terrain.addTortue(tortue);
+        vue.setTortue(tortue);
+        if (null == tortueCourante)
+            tortueCourante = tortue;
+    }
+    public void addTortue(){
+        this.addTortue(new Tortue((int) terrain.getLargeur() / 2, (int) terrain.getHauteur() / 2));
+    }
+
+
+    public void overrideActionHandler(String command, ActionHandler handler){
+        actionsHandlers.put(command, handler);
     }
 
     /** la gestion des actions des boutons */
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        System.out.println("I will do smt");
+        this.dispatcher(command, e);
+    }
 
-        // actions des boutons du haut
-        if (command.equals("Avancer")) {
-            System.out.println("command avancer");
-            try {
-                int valeur= Integer.parseInt(vue.getInputValue());
-                tortueCourante.avancer(valeur);
-            } catch (NumberFormatException ex){
-                System.err.println("ce n'est pas un nombre : " + vue.getInputValue());
-            }
+    public void dispatcher(String command, ActionEvent event){
 
-        }
-        else if (command.equals("Droite")) {
-            try {
-                int valeur= Integer.parseInt(vue.getInputValue());
-                tortueCourante.droite(valeur);
-            } catch (NumberFormatException ex){
-                System.err.println("ce n'est pas un nombre : " + vue.getInputValue());
-            }
-        }
-        else if (command.equals("Gauche")) {
-            try {
-                int valeur= Integer.parseInt(vue.getInputValue());
-                tortueCourante.gauche(valeur);
-            } catch (NumberFormatException ex){
-                System.err.println("ce n'est pas un nombre : " + vue.getInputValue());
-            }
-        }
-        // actions des boutons du bas
-        else if (command.equals("Proc1"))
-            proc1();
-        else if (command.equals("Proc2"))
-            proc2();
-        else if (command.equals("Proc3"))
-            proc3();
-        else if (command.equals("Effacer"))
+        ActionHandler handler = actionsHandlers.get(command);
+        if (null != handler){
+            handler.handle(this, this.terrain, this.vue);
+        } else if (command.equals("Effacer"))
             vue.effacer();
-        else if (command.equals("Ajouter"))
-            vue.ajouter();
         else if (command.equals("Quitter"))
             vue.quitter();
-
-        vue.repaint();
+        else {
+            System.out.println("Action non supportée : \"" + command + "\"");
+        }
     }
 
-    /** les procedures Logo qui combine plusieurs commandes..*/
-    public void proc1() {        tortueCourante.carre();    }
 
-    public void proc2() {
-        tortueCourante.poly(60,8);
+    public Tortue getTortueCourante() {
+        return tortueCourante;
     }
 
-    public void proc3() {
-        tortueCourante.spiral(50,40,6);
+    public void setVue(SimpleLogo vue) {
+        this.vue = vue;
     }
 }
