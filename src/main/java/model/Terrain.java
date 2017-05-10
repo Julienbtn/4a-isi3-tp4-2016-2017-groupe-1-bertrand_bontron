@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 
 
@@ -24,8 +25,8 @@ public class Terrain extends Observable {
         return tortues.get(id);
     }
 
-    public Tortue[] getTortues(){
-        return (Tortue[]) tortues.toArray();
+    public Iterator<Tortue> getTortues(){
+        return tortues.iterator();
     }
 
     public void addTortue(Tortue tortue){
@@ -44,6 +45,21 @@ public class Terrain extends Observable {
         return hauteur;
     }
 
+    public Tortue getTortueProche(int x, int y){
+        return getTortueProche(x, y, 10);
+    }
 
+    public Tortue getTortueProche(int x, int y, double distanceMin) {
 
+        Tortue proche = null;
+        distanceMin = distanceMin * distanceMin;
+        for (Tortue courante : tortues) {
+            double distance = courante.distance2(x, y);
+            if (distance < distanceMin) {
+                proche = courante;
+                distanceMin = distance;
+            }
+        }
+        return proche;
+    }
 }

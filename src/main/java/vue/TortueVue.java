@@ -4,9 +4,6 @@ package vue;
 import model.Tortue;
 
 import java.awt.*;
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
 
 public class TortueVue{
 
@@ -28,7 +25,7 @@ public class TortueVue{
 
         //Calcule des deux bases
         //Angle de la droite
-        double theta=ratioDegRad*(- tortue.getDir());
+        double theta=ratioDegRad*(- tortue.getDirection());
         //Demi angle au sommet du triangle
         double alpha=Math.atan( (float)rb / (float)rp );
         //Rayon de la fleche
@@ -47,7 +44,7 @@ public class TortueVue{
                 (int) Math.round( point2.y+r*Math.sin(theta - alpha) ));
 
         fleche.addPoint(point2.x,point2.y);
-        g.setColor(Color.green);
+        g.setColor(tortue.getColor());
         g.fillPolygon(fleche);
     }
 

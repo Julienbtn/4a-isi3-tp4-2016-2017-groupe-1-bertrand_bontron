@@ -4,36 +4,41 @@ package control;
 import control.handler.ActionHandler;
 import model.Terrain;
 import model.Tortue;
+import model.mouvement.MouvementStrategie;
+import model.mouvement.Rectiligne;
 import vue.SimpleLogo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
-public class Controleur implements ActionListener {
+public class Controleur extends MouseAdapter implements ActionListener {
 
-    private SimpleLogo vue;
-    private Tortue tortueCourante;
-    private Terrain terrain;
+    protected SimpleLogo vue;
+    protected Tortue tortueCourante;
+    protected Terrain terrain;
+    protected MouvementStrategie defaultMouvementStrategie;
 
-    private HashMap<String, ActionHandler> actionsHandlers;
+    protected HashMap<String, ActionHandler> actionsHandlers;
 
 
 
     public Controleur(Terrain model){
         actionsHandlers = new HashMap<>();
+        this.defaultMouvementStrategie = new Rectiligne(model);
         this.terrain = model;
     }
 
     public void addTortue(Tortue tortue){
         terrain.addTortue(tortue);
-        vue.setTortue(tortue);
-        if (null == tortueCourante)
-            tortueCourante = tortue;
+        tortueCourante = tortue;
     }
     public void addTortue(){
-        this.addTortue(new Tortue((int) terrain.getLargeur() / 2, (int) terrain.getHauteur() / 2));
+        Tortue tortue = new Tortue( terrain.getLargeur() / 2, terrain.getHauteur() / 2, vue.getCouleur());
+        tortue.setMouvement(defaultMouvementStrategie);
+        this.addTortue(tortue);
     }
 
 
@@ -51,13 +56,21 @@ public class Controleur implements ActionListener {
 
         ActionHandler handler = actionsHandlers.get(command);
         if (null != handler){
-            handler.handle(this, this.terrain, this.vue);
+            handler.handle(this, this.terrain, this.vue, event);
         } else if (command.equals("Effacer"))
             vue.effacer();
         else if (command.equals("Quitter"))
             vue.quitter();
         else {
             System.out.println("Action non supportée : \"" + command + "\"");
+        }
+    }
+
+    public void mouseClicked(MouseEvent event){
+        Tortue tortue = terrain.getTortueProche(event.getX(), event.getY());
+        if (tortue != null){
+            tortueCourante = tortue;
+            System.out.println("Nouvelle tortue");
         }
     }
 

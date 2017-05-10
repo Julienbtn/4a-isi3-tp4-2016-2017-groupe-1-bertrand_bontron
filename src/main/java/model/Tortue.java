@@ -1,8 +1,9 @@
 package model;// package logo;
 
+import model.mouvement.MouvementStrategie;
+import model.mouvement.Rectiligne;
+
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Observable;
 
 
@@ -24,7 +25,6 @@ public class Tortue extends Observable
 {
 
 	protected static final int rp=10, rb=5; // Taille de la pointe et de la base de la fleche
-	protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
 	private static final Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.red,
 			Color.green, Color.lightGray, Color.magenta, Color.orange, Color.gray,
 			Color.pink, Color.yellow};
@@ -32,29 +32,41 @@ public class Tortue extends Observable
 	protected int x;
 	protected int y;
 	protected int direction;
-	protected int couleur;
+	protected int vitesse;
+	protected Color couleur;
+
+	private MouvementStrategie mouvement;
+
+	public void setColor(Color n) {couleur= n;}
+	public Color getColor() {return couleur;}
 
 
-	public void setColor(int n) {couleur= n;}
-	public int getColor() {return couleur;}
-
-	public Tortue() {
-		reset();
-	}
-
-
-	public Tortue(int x, int y) {
-		reset();
+	public Tortue(int x, int y, int couleurId) {
 		this.x = x;
 		this.y = y;
+		this.vitesse = 5;
+		this.couleur = Couleur.getCouleur(couleurId);
+		direction= -90;
 	}
 
+	public void setMouvement(MouvementStrategie mouvement){
+		this.mouvement = mouvement;
+	}
+
+	public Tortue() {
+		this(0, 0, 0);
+	}
+
+	public Tortue(int x, int y) {
+		this(x, y, 0);
+	}
 
 	public void reset() {
 		x = 0;
 		y = 0;
+		couleur = Color.black;
 		direction= -90;
-		couleur= 0;
+		vitesse = 10;
 		setChanged();
 		notifyObservers();
   	}
@@ -74,7 +86,11 @@ public class Tortue extends Observable
 		return y;
 	}
 
-	public int getDir() {
+	public int getVitesse() {
+		return vitesse;
+	}
+
+	public int getDirection() {
 		return direction;
 	}
 
@@ -82,12 +98,8 @@ public class Tortue extends Observable
 		return (c < colors.length) ? colors[c] : Color.black;
 	}
 
-	public void avancer(int dist) {
-		int newX = (int) Math.round(x+dist*Math.cos(ratioDegRad*direction));
-		int newY = (int) Math.round(y+dist*Math.sin(ratioDegRad*direction));
-
-		x = newX;
-		y = newY;
+	public void avancer() {
+		mouvement.bouger(this);
 
 		setChanged();
 		notifyObservers();
@@ -105,39 +117,44 @@ public class Tortue extends Observable
 		notifyObservers();
 	}
 
-	public void couleur(int n) {
-		couleur= n % 12;
+	public void couleur(int couleurId) {
+		this.couleur= Couleur.getCouleur(couleurId);
 	}
 
-	public void couleurSuivante() {
-	 	couleur(couleur+1);
-	}
 
 	/** quelques classiques */
 
 	public void carre() {
 		for (int i=0;i<4;i++) {
-			avancer(100);
+			avancer();
 			droite(90);
 		}
 	}
 
 	public void poly(int n, int a) {
 		for (int j=0;j<a;j++) {
-			avancer(n);
+			avancer();
 			droite(360/a);
 		}
 	}
 
 	public void spiral(int n, int k, int a) {
 		for (int i = 0; i < k; i++) {
-			couleurSuivante();
-			avancer(n);
+			avancer();
 			droite(360/a);
 			n = n+1;
 		}
 	}
 
+	public Double distance(int x, int y){
+		return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
+	}
+	public Double distance2(int x, int y){
+		return Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2);
+	}
 
 
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
 }

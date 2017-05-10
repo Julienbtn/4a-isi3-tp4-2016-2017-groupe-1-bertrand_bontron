@@ -37,6 +37,7 @@ public class SimpleLogo extends JFrame implements Observer {
 	private FeuilleDessin feuille;
 	private JTextField inputValue;
 	private Controleur controleur;
+	private int couleurSelectionneeId;
 
 
 	
@@ -47,6 +48,8 @@ public class SimpleLogo extends JFrame implements Observer {
 	public SimpleLogo(Terrain model, Controleur controleur) {
 		super("un logo tout simple");
 		this.controleur = controleur;
+		this.couleurSelectionneeId = 0;
+		model.addObserver(this);
 		logoInit();
 		addWindowListener(new WindowAdapter() {
 		    @Override
@@ -58,6 +61,7 @@ public class SimpleLogo extends JFrame implements Observer {
 	}
 
 	public void logoInit() {
+		final SimpleLogo myself = this;
 		getContentPane().setLayout(new BorderLayout(10,10));
 
 		// Boutons
@@ -93,7 +97,7 @@ public class SimpleLogo extends JFrame implements Observer {
 		colorList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox comboBox = (JComboBox)e.getSource();
-				int n = comboBox.getSelectedIndex();
+				myself.couleurSelectionneeId = comboBox.getSelectedIndex();
 			}
 		});
 
@@ -143,7 +147,7 @@ public class SimpleLogo extends JFrame implements Observer {
 		feuille.setBackground(Color.white);
 		feuille.setSize(new Dimension(600,400));
 		feuille.setPreferredSize(new Dimension(600,400));
-			
+		feuille.addMouseListener(controleur);
 		getContentPane().add(feuille,"Center");
 
 
@@ -151,7 +155,7 @@ public class SimpleLogo extends JFrame implements Observer {
 		setVisible(true);
 	}
 
-	public void setTortue(Tortue tortue){
+	public void addTortue(Tortue tortue){
 		feuille.addTortue(tortue);
 		tortue.addObserver(this);
 	}
@@ -216,7 +220,14 @@ public class SimpleLogo extends JFrame implements Observer {
 	}
 
 	@Override
-	public void update(Observable observable, Object o) {
+	public void update(Observable observable, Object complement) {
+		if (observable instanceof Terrain && complement instanceof Tortue){
+			this.addTortue((Tortue) complement);
+		}
 		this.repaint();
+	}
+
+	public int getCouleur() {
+		return couleurSelectionneeId;
 	}
 }
