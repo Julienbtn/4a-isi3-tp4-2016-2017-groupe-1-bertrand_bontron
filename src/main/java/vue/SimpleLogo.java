@@ -6,11 +6,7 @@ import model.Tortue;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -79,8 +75,8 @@ public class SimpleLogo extends JFrame implements Observer {
 		addButton(toolBar, "Avancer", "Avancer 50", null);
 		addButton(toolBar, "Droite", "Droite 45", null);
 		addButton(toolBar, "Gauche", "Gauche 45", null);
-		addButton(toolBar, "Lever", "Lever Crayon", null);
-		addButton(toolBar, "Baisser", "Baisser Crayon", null);
+		//addButton(toolBar, "Lever", "Lever Crayon", null);
+		//addButton(toolBar, "Baisser", "Baisser Crayon", null);
 		addButton(toolBar, "Ajouter","Ajouter Tortue" , null);
 
 		String[] colorStrings = {"noir", "bleu", "cyan","gris fonce","rouge",
@@ -118,8 +114,8 @@ public class SimpleLogo extends JFrame implements Observer {
 		addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
 		addMenuItem(menuCommandes, "Droite", "Droite", -1);
 		addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
-		addMenuItem(menuCommandes, "Lever Crayon", "Lever", -1);
-		addMenuItem(menuCommandes, "Baisser Crayon", "Baisser", -1);
+//		addMenuItem(menuCommandes, "Lever Crayon", "Lever", -1);
+//		addMenuItem(menuCommandes, "Baisser Crayon", "Baisser", -1);
 		addMenuItem(menuCommandes, "Ajouter Tortue", "Ajouter", -1);
 
 		menubar.add(menuHelp);
@@ -130,20 +126,20 @@ public class SimpleLogo extends JFrame implements Observer {
 
 
 		// les boutons du bas
-		JPanel p2 = new JPanel(new GridLayout());
-		JButton b20 = new JButton("Proc1");
-		JButton b21 = new JButton("Proc2");
-		JButton b22 = new JButton("Proc3");
-		p2.add(b20);
-		p2.add(b21);
-		p2.add(b22);
-		b20.addActionListener(controleur);
-		b21.addActionListener(controleur);
-		b22.addActionListener(controleur);
+		JPanel panel2 = new JPanel(new GridLayout());
+		JButton boutonCarre = new JButton("Carré");
+		JButton boutonPolygone = new JButton("Polygone");
+		JButton boutonSpiral = new JButton("Spiral");
+		panel2.add(boutonCarre);
+		panel2.add(boutonPolygone);
+		panel2.add(boutonSpiral);
+		boutonCarre.addActionListener(controleur);
+		boutonPolygone.addActionListener(controleur);
+		boutonSpiral.addActionListener(controleur);
 
-		getContentPane().add(p2,"South");
+		getContentPane().add(panel2,"South");
 
-		feuille = new FeuilleDessin(); //500, 400);
+		feuille = new FeuilleDessin(); //(600, 400);
 		feuille.setBackground(Color.white);
 		feuille.setSize(new Dimension(600,400));
 		feuille.setPreferredSize(new Dimension(600,400));
