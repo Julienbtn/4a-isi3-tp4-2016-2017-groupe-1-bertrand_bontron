@@ -16,9 +16,9 @@ public class Main {
         controleur.overrideActionHandler("Avancer", new AvancerHandler());
         controleur.overrideActionHandler("Gauche", new GaucheHandler());
         controleur.overrideActionHandler("Droite", new DroiteHandler());
-        controleur.overrideActionHandler("Proc1", new CarreHandler());
-        controleur.overrideActionHandler("Proc2", new PolyHandler());
-        controleur.overrideActionHandler("Proc3", new SpiralHandler());
+        controleur.overrideActionHandler("Carré", new CarreHandler());
+        controleur.overrideActionHandler("Polygone", new PolyHandler());
+        controleur.overrideActionHandler("Spiral", new SpiralHandler());
         controleur.overrideActionHandler("Ajouter", new AjouterHandler());
     }
 }

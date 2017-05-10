@@ -4,9 +4,7 @@ package vue;
 import model.Tortue;
 
 import java.awt.*;
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
+
 
 public class TortueVue{
 
