@@ -23,39 +23,45 @@ public class Controleur extends MouseAdapter implements ActionListener {
 
     protected HashMap<String, ActionHandler> actionsHandlers;
 
+    public Controleur() {
+        actionsHandlers = new HashMap<>();
+    }
 
 
-    public Controleur(Terrain model){
+    public Controleur(Terrain model) {
         actionsHandlers = new HashMap<>();
         this.defaultMouvementStrategie = new Rectiligne(model);
         this.terrain = model;
     }
 
-    public void addTortue(Tortue tortue){
+    public void addTortue(Tortue tortue) {
         terrain.addTortue(tortue);
         tortueCourante = tortue;
     }
-    public void addTortue(){
-        Tortue tortue = new Tortue( terrain.getLargeur() / 2, terrain.getHauteur() / 2, vue.getCouleur());
+
+    public void addTortue() {
+        Tortue tortue = new Tortue(terrain.getLargeur() / 2, terrain.getHauteur() / 2, vue.getCouleur());
         tortue.setMouvement(defaultMouvementStrategie);
         this.addTortue(tortue);
     }
 
 
-    public void overrideActionHandler(String command, ActionHandler handler){
+    public void overrideActionHandler(String command, ActionHandler handler) {
         actionsHandlers.put(command, handler);
     }
 
-    /** la gestion des actions des boutons */
+    /**
+     * la gestion des actions des boutons
+     */
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         this.dispatcher(command, e);
     }
 
-    public void dispatcher(String command, ActionEvent event){
+    public void dispatcher(String command, ActionEvent event) {
 
         ActionHandler handler = actionsHandlers.get(command);
-        if (null != handler){
+        if (null != handler) {
             handler.handle(this, this.terrain, this.vue, event);
         } else if (command.equals("Effacer"))
             vue.effacer();
@@ -66,9 +72,9 @@ public class Controleur extends MouseAdapter implements ActionListener {
         }
     }
 
-    public void mouseClicked(MouseEvent event){
+    public void mouseClicked(MouseEvent event) {
         Tortue tortue = terrain.getTortueProche(event.getX(), event.getY());
-        if (tortue != null){
+        if (tortue != null) {
             tortueCourante = tortue;
             System.out.println("Nouvelle tortue");
         }

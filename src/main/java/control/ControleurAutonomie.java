@@ -11,16 +11,16 @@ public class ControleurAutonomie extends Controleur {
 
     private Thread thread;
 
-    public ControleurAutonomie(Terrain model){
+    public ControleurAutonomie(Terrain model) {
         super(model);
         defaultMouvementStrategie = new Aleatoire(model);
 
 
-        ControleurAutonomie myself = this;
+        final ControleurAutonomie myself = this;
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+                while (true) {
                     myself.bouger();
                     try {
                         Thread.sleep(28);
@@ -32,11 +32,11 @@ public class ControleurAutonomie extends Controleur {
         });
     }
 
-    public void lancer(){
+    public void lancer() {
         thread.start();
     }
 
-    public void addTortue(Tortue tortue){
+    public void addTortue(Tortue tortue) {
         tortue.setMouvement(defaultMouvementStrategie);
         super.addTortue(tortue);
     }

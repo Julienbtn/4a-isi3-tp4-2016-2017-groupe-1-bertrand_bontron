@@ -12,7 +12,7 @@ public class Aleatoire extends MouvementStrategie {
     protected Terrain terrain;
     protected Random rand;
 
-    public Aleatoire(Terrain terrain){
+    public Aleatoire(Terrain terrain) {
         this.terrain = terrain;
         rand = new Random();
     }

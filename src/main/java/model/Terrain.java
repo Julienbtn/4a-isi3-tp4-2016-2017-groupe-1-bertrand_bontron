@@ -11,41 +11,41 @@ public class Terrain extends Observable {
     protected final int largeur;
     protected final int hauteur;
 
-    public Terrain(int largeur, int hauteur){
+    public Terrain(int largeur, int hauteur) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.tortues = new ArrayList<>();
     }
 
-    public int getNombreTortues(){
+    public int getNombreTortues() {
         return tortues.size();
     }
 
-    public Tortue getTortue(int id){
+    public Tortue getTortue(int id) {
         return tortues.get(id);
     }
 
-    public Iterator<Tortue> getTortues(){
+    public Iterator<Tortue> getTortues() {
         return tortues.iterator();
     }
 
-    public void addTortue(Tortue tortue){
-        if (! tortues.contains(tortue)){
+    public void addTortue(Tortue tortue) {
+        if (!tortues.contains(tortue)) {
             tortues.add(tortue);
             this.setChanged();
             this.notifyObservers(tortue);
         }
     }
 
-    public int getLargeur(){
+    public int getLargeur() {
         return largeur;
     }
 
-    public int getHauteur(){
+    public int getHauteur() {
         return hauteur;
     }
 
-    public Tortue getTortueProche(int x, int y){
+    public Tortue getTortueProche(int x, int y) {
         return getTortueProche(x, y, 10);
     }
 

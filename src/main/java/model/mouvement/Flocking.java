@@ -12,7 +12,7 @@ public class Flocking extends MouvementStrategie {
     private int rayon;
     private double influence;
 
-    public Flocking(Terrain terrain, int rayon, double influence){
+    public Flocking(Terrain terrain, int rayon, double influence) {
         this.terrain = terrain;
         this.rayon = rayon * rayon;
         this.influence = influence;
@@ -26,9 +26,9 @@ public class Flocking extends MouvementStrategie {
         int currX = tortue.getX(), currY = tortue.getY();
 
         Iterator<Tortue> voisins = terrain.getTortues();
-        while (voisins.hasNext()){
+        while (voisins.hasNext()) {
             Tortue voisin = voisins.next();
-            if (voisin.distance2(currX, currY) < rayon){
+            if (voisin.distance2(currX, currY) < rayon) {
                 vitesseMoy += voisin.getVitesse();
                 directionMoy += voisin.getDirection();
                 nbVoisins++;

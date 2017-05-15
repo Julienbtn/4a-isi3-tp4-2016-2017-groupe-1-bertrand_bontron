@@ -8,11 +8,12 @@ public class Rectiligne extends MouvementStrategie {
 
     private Terrain terrain;
 
-    public Rectiligne(Terrain terrain){
+    public Rectiligne(Terrain terrain) {
         this.terrain = terrain;
     }
 
     protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
+
     @Override
     public void bouger(Tortue tortue) {
         int x = Math.floorMod((int) Math.round(tortue.getX() + tortue.getVitesse() * Math.cos(ratioDegRad * tortue.getDirection())),

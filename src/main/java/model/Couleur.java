@@ -7,7 +7,7 @@ public class Couleur {
             Color.green, Color.lightGray, Color.magenta, Color.orange, Color.gray,
             Color.pink, Color.yellow};
 
-    public static Color getCouleur(int id){
+    public static Color getCouleur(int id) {
         return (id < couleurs.length) ? couleurs[id] : Color.black;
     }
 }
