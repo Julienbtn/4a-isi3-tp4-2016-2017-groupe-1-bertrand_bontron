@@ -146,7 +146,6 @@ public class SimpleLogo extends JFrame implements Observer {
         feuille.addMouseListener(controleur);
         getContentPane().add(feuille, "Center");
 
-
         pack();
         setVisible(true);
     }

@@ -5,10 +5,8 @@ import control.Controleur;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Demarrage extends JFrame {
+public class Demarrage extends JFrame implements ActionListener {
 
     private Controleur controleur;
 
@@ -28,8 +26,16 @@ public class Demarrage extends JFrame {
         boutonAutonome.addActionListener(controleur);
         boutonFlocking.addActionListener(controleur);
         getContentPane().add(panel);
+        boutonDependant.addActionListener(this);
+        boutonAutonome.addActionListener(this);
+        boutonFlocking.addActionListener(this);
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        this.dispose();
     }
 }
