@@ -8,6 +8,6 @@ public class ControleurFlocking extends ControleurAutonomie {
 
     public ControleurFlocking(Terrain model) {
         super(model);
-        this.defaultMouvementStrategie = new Flocking(model, 50, 0.05);
+        this.defaultMouvementStrategie = new Flocking(model, 20, 0.05);
     }
 }

@@ -47,6 +47,5 @@ public class ControleurAutonomie extends Controleur {
             Tortue tortue = tortues.next();
             tortue.avancer();
         }
-        System.out.println("on a bougé");
     }
 }

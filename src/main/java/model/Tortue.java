@@ -30,8 +30,8 @@ public class Tortue extends Observable {
 
     protected int x;
     protected int y;
-    protected int direction;
-    protected int vitesse;
+    protected double direction;
+    protected double vitesse;
     protected Color couleur;
 
     private MouvementStrategie mouvement;
@@ -46,11 +46,14 @@ public class Tortue extends Observable {
 
 
     public Tortue(int x, int y, int couleurId) {
+        this(x, y , couleurId, 10, -90);
+    }
+    public Tortue(int x, int y, int couleurId, double vitesse, double direction){
         this.x = x;
         this.y = y;
-        this.vitesse = 5;
         this.couleur = Couleur.getCouleur(couleurId);
-        direction = -90;
+        this.vitesse = vitesse;
+        this.direction = direction;
     }
 
     public void setMouvement(MouvementStrategie mouvement) {
@@ -90,11 +93,11 @@ public class Tortue extends Observable {
         return y;
     }
 
-    public int getVitesse() {
+    public double getVitesse() {
         return vitesse;
     }
 
-    public int getDirection() {
+    public double getDirection() {
         return direction;
     }
 
@@ -161,7 +164,11 @@ public class Tortue extends Observable {
     }
 
 
-    public void setDirection(int direction) {
+    public void setDirection(double direction) {
         this.direction = direction;
+    }
+
+    public void setVitesse(double vitesse) {
+        this.vitesse = vitesse;
     }
 }
