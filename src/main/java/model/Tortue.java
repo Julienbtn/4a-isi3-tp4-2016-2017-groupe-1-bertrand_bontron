@@ -1,7 +1,7 @@
 package model;// package logo;
 
 import model.mouvement.MouvementStrategie;
-import model.mouvement.Rectiligne;
+import vue.TortueTriangleVue;
 
 import java.awt.*;
 import java.util.Observable;
@@ -21,7 +21,7 @@ import java.util.Observable;
  **************************************************************************/
 
 
-public class Tortue extends Observable {
+public class Tortue extends Observable implements Visualisable {
 
     protected static final int rp = 10, rb = 5; // Taille de la pointe et de la base de la fleche
     private static final Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.red,
@@ -170,5 +170,10 @@ public class Tortue extends Observable {
 
     public void setVitesse(double vitesse) {
         this.vitesse = vitesse;
+    }
+
+    @Override
+    public Class getVisualiseur() {
+        return TortueTriangleVue.class;
     }
 }

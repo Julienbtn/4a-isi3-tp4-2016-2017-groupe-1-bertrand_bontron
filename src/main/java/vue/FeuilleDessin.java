@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Titre :        Logo
@@ -20,19 +18,19 @@ import java.util.Observer;
  */
 
 public class FeuilleDessin extends JPanel {
-    private ArrayList<TortueVue> tortuesList; // la liste des tortues enregistrees
+    private ArrayList<TortueTriangleVue> tortuesList; // la liste des tortues enregistrees
 
     public FeuilleDessin() {
-        tortuesList = new ArrayList<TortueVue>();
+        tortuesList = new ArrayList<TortueTriangleVue>();
     }
 
     public void addTortue(Tortue tortue) {
-        tortuesList.add(new TortueVue(tortue));
+        tortuesList.add(new TortueTriangleVue(tortue));
     }
 
     public void reset() {
         for (Iterator iterateur = tortuesList.iterator(); iterateur.hasNext(); ) {
-            TortueVue tortueVue = (TortueVue) iterateur.next();
+            TortueTriangleVue tortueVue = (TortueTriangleVue) iterateur.next();
             tortueVue.tortue.reset();
         }
     }
@@ -53,8 +51,8 @@ public class FeuilleDessin extends JPanel {
 
     public void showTurtles(Graphics g) {
         for (Iterator iterateur = tortuesList.iterator(); iterateur.hasNext(); ) {
-            TortueVue tortueVue = (TortueVue) iterateur.next();
-            tortueVue.drawTurtle(g);
+            TortueTriangleVue tortueVue = (TortueTriangleVue) iterateur.next();
+            tortueVue.drawTurtleCerfVolant(g);
         }
     }
 
