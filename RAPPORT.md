@@ -128,3 +128,28 @@ Voici le model UML afin de mettre notre projet en MVC.
 
 ## Question 10
 *Rien à rédiger*
+
+
+## Question finale 
+
+Au démarrage de l'application, un menu de sélection s'affiche permettant de sélectionner le type de déplacement des tortues. 
+
+![Demarrage](images/Demarrage.png)
+
+Nous avons donc créé les trois modes de déplacement des tortues. 
+Tout d'abord, les tortues dépendantes, ce sont des tortues qu'il faut déplacer manuellement grâce au bouton de l'interface graphique. 
+
+![Dependante](images/Dependant.png)
+
+Comme nous pouvons le voir sur l'image, nous pouvons faire avancer, tourner à gauche ou à droite, ajouter des torutes de la couleur sélectionnée de le menu couleur. Nous pouvons également supprimé l'image afin de recommencer. Nous pouvons également utilisé les boutons du bas pour faire un carré, un polygone ou une spiral, cependant nous ne verrons pas le résultat car nous ne dessinons pas ces formes à l'aide d'un stylo. 
+
+Au niveau implémentation, nous avons créé une interface ActionHandler où toutes les différentes actions implémentent cette classe. Voir UML suivant:
+
+![Handler_UML](images/Handler_UML.png)
+
+Ensuite, les tortues autonomes sont des tortues qui se déplacement aléatoirement dans l'espacee. 
+
+![Autonome](images/Autonome.png)
+
+Au niveau de l'implémentation, nous avons créé une nouvelle classe implémentant l'interface ActionHandler voir code suivant: 
+
