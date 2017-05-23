@@ -1,7 +1,7 @@
 package model;// package logo;
 
 import model.mouvement.MouvementStrategie;
-import vue.TortueTriangleVue;
+import vue.tortue.TortueTriangleVue;
 
 import java.awt.*;
 import java.util.Observable;
@@ -21,7 +21,7 @@ import java.util.Observable;
  **************************************************************************/
 
 
-public class Tortue extends Observable implements Visualisable {
+public abstract class Tortue {
 
     protected static final int rp = 10, rb = 5; // Taille de la pointe et de la base de la fleche
     private static final Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.red,
@@ -36,53 +36,40 @@ public class Tortue extends Observable implements Visualisable {
 
     private MouvementStrategie mouvement;
 
-    public void setColor(Color n) {
-        couleur = n;
+
+    public Tortue(MouvementStrategie mouvement) {
+        this(0, 0, 0, mouvement);
     }
 
-    public Color getColor() {
-        return couleur;
+    public Tortue(int x, int y, MouvementStrategie mouvement) {
+        this(x, y, 0, mouvement);
     }
 
-
-    public Tortue(int x, int y, int couleurId) {
-        this(x, y , couleurId, 10, -90);
+    public Tortue(int x, int y, int couleurId, MouvementStrategie mouvement) {
+        this(x, y , couleurId, 10, -90, mouvement);
     }
-    public Tortue(int x, int y, int couleurId, double vitesse, double direction){
+
+    public Tortue(int x, int y, int couleurId, double vitesse, double direction, MouvementStrategie mouvement){
         this.x = x;
         this.y = y;
         this.couleur = Couleur.getCouleur(couleurId);
         this.vitesse = vitesse;
         this.direction = direction;
+        this.mouvement = mouvement;
     }
+
+
 
     public void setMouvement(MouvementStrategie mouvement) {
         this.mouvement = mouvement;
     }
 
-    public Tortue() {
-        this(0, 0, 0);
-    }
-
-    public Tortue(int x, int y) {
-        this(x, y, 0);
-    }
 
     public void reset() {
         x = 0;
         y = 0;
-        couleur = Color.black;
         direction = -90;
         vitesse = 10;
-        setChanged();
-        notifyObservers();
-    }
-
-    public void setPosition(int newX, int newY) {
-        x = newX;
-        y = newY;
-        setChanged();
-        notifyObservers();
     }
 
     public int getX() {
@@ -101,31 +88,39 @@ public class Tortue extends Observable implements Visualisable {
         return direction;
     }
 
-    protected Color decodeColor(int c) {
-        return (c < colors.length) ? colors[c] : Color.black;
+    public Color getColor() {
+        return couleur;
     }
+
+
+    public void setPosition(int newX, int newY) {
+        x = newX;
+        y = newY;
+    }
+
+    public void setDirection(double direction) {
+        this.direction = direction;
+    }
+
+    public void setVitesse(double vitesse) {
+        this.vitesse = vitesse;
+    }
+
+    public void setColor(Color n) {
+        couleur = n;
+    }
+
 
     public void avancer() {
         mouvement.bouger(this);
-
-        setChanged();
-        notifyObservers();
     }
 
     public void droite(int angle) {
         direction = (direction + angle) % 360;
-        setChanged();
-        notifyObservers();
     }
 
     public void gauche(int angle) {
         direction = (direction - angle) % 360;
-        setChanged();
-        notifyObservers();
-    }
-
-    public void couleur(int couleurId) {
-        this.couleur = Couleur.getCouleur(couleurId);
     }
 
 
@@ -164,16 +159,5 @@ public class Tortue extends Observable implements Visualisable {
     }
 
 
-    public void setDirection(double direction) {
-        this.direction = direction;
-    }
 
-    public void setVitesse(double vitesse) {
-        this.vitesse = vitesse;
-    }
-
-    @Override
-    public Class getVisualiseur() {
-        return TortueTriangleVue.class;
-    }
 }

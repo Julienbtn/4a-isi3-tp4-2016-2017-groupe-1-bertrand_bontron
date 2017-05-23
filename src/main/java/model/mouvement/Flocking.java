@@ -4,6 +4,7 @@ import model.Terrain;
 import model.Tortue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Flocking extends MouvementStrategie {
@@ -14,15 +15,13 @@ public class Flocking extends MouvementStrategie {
     private static double ALIGNMENT_WEIGHT = 0.1;
     private static double SEPARATION_WEIGHT = 5;
 
-    private Terrain terrain;
-    private int rayonVoisin2;
-    private int rayonTropProche;
-    private double influence;
+    protected Terrain terrain;
+    protected int rayonVoisin2;
+    protected int rayonTropProche;
 
-    public Flocking(Terrain terrain, int rayon, double influence) {
+    public Flocking(Terrain terrain, int rayon) {
         this.terrain = terrain;
         this.rayonVoisin2 = rayon * rayon;
-        this.influence = influence;
         this.rayonTropProche = 40;
     }
 
@@ -35,11 +34,7 @@ public class Flocking extends MouvementStrategie {
         double currDirection = Math.toRadians(tortue.getDirection());
 
         // liste les voisins
-        ArrayList<Tortue> voisins = new ArrayList<>();
-        terrain.getTortues().forEachRemaining((Tortue t) -> {
-            if (t != tortue && t.distance2(currX, currY) <= rayonVoisin2)
-                voisins.add(t);
-        });
+        List<Tortue> voisins = getVoisins(tortue);
 
         /// Cohesion
         // Centre de gravité
@@ -122,11 +117,6 @@ public class Flocking extends MouvementStrategie {
         double movX = Math.cos(currDirection) * currVitesse;
         double movY = Math.sin(currDirection) * currVitesse;
 
-        /*
-        tortue.setPosition(
-                Math.floorMod((int)(currX + movX), terrain.getLargeur()),
-                Math.floorMod((int)(currY + movY), terrain.getHauteur())
-        );*/
 
         // ajoute influence des voisins
         movX += (cohesionX * COHESION_WEIGHT) +
@@ -150,6 +140,12 @@ public class Flocking extends MouvementStrategie {
         int newX = Math.floorMod((int) (currX + movX), terrain.getLargeur());
         int newY = Math.floorMod((int) (currY + movY), terrain.getHauteur());
         tortue.setPosition(newX, newY);
+    }
+
+    public List<Tortue> getVoisins(Tortue tortue){
+        int currX = tortue.getX();
+        int currY = tortue.getY();
+        return terrain.filtrerTortues((Tortue t) -> (t != tortue && t.distance2(currX, currY) <= rayonVoisin2));
     }
 
 

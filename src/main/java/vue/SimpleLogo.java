@@ -152,19 +152,14 @@ public class SimpleLogo extends JFrame implements Observer {
 
     public void addTortue(Tortue tortue) {
         feuille.addTortue(tortue);
-        tortue.addObserver(this);
     }
 
-    public String getInputValue() {
-        String texte = inputValue.getText();
-        return (texte);
-    }
+
 
 
     // efface tout et reinitialise la feuille
     public void effacer() {
-        feuille.reset();
-        feuille.repaint();
+        // @todo
     }
 
     public void ajouter() {

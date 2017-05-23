@@ -12,13 +12,12 @@ public class Rectiligne extends MouvementStrategie {
         this.terrain = terrain;
     }
 
-    protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
 
     @Override
     public void bouger(Tortue tortue) {
-        int x = Math.floorMod((int) Math.round(tortue.getX() + tortue.getVitesse() * Math.cos(ratioDegRad * tortue.getDirection())),
+        int x = Math.floorMod((int) Math.round(tortue.getX() + tortue.getVitesse() * Math.cos(Math.toRadians(tortue.getDirection()))),
                 terrain.getLargeur());
-        int y = Math.floorMod((int) Math.round(tortue.getY() + tortue.getVitesse() * Math.sin(ratioDegRad * tortue.getDirection())),
+        int y = Math.floorMod((int) Math.round(tortue.getY() + tortue.getVitesse() * Math.sin(Math.toRadians(tortue.getDirection()))),
                 terrain.getHauteur());
 
         tortue.setPosition(x, y);

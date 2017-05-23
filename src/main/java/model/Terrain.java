@@ -2,12 +2,14 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
+import java.util.function.Predicate;
 
 
 public class Terrain extends Observable {
 
-    protected ArrayList<Tortue> tortues;
+    protected List<Tortue> tortues;
     protected final int largeur;
     protected final int hauteur;
 
@@ -32,9 +34,23 @@ public class Terrain extends Observable {
     public void addTortue(Tortue tortue) {
         if (!tortues.contains(tortue)) {
             tortues.add(tortue);
-            this.setChanged();
+
             this.notifyObservers(tortue);
         }
+    }
+
+    public void pasSuivant(){
+        for (Tortue tortue : tortues){
+            tortue.avancer();
+        }
+
+        notifyObservers();
+    }
+
+    public void avancerTortue(int tortueId){
+        tortues.get(tortueId).avancer();
+
+        notifyObservers();
     }
 
     public int getLargeur() {
@@ -61,5 +77,23 @@ public class Terrain extends Observable {
             }
         }
         return proche;
+    }
+
+    public void notifyObservers(){
+        setChanged();
+        super.notifyObservers();
+    }
+
+    public void notifyObservers(Object obj){
+        setChanged();
+        super.notifyObservers(obj);
+    }
+
+    public List<Tortue> filtrerTortues(Predicate<Tortue> predicate) {
+        List<Tortue> valides = new ArrayList<>();
+        for (Tortue tortue : tortues)
+            if (predicate.test(tortue))
+                valides.add(tortue);
+        return valides;
     }
 }

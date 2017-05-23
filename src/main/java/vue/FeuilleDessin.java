@@ -1,15 +1,15 @@
 package vue;// package logo;
 
 import model.Tortue;
+import vue.tortue.TortueVue;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Titre :        Logo
- * Description :  Un exemple de programme graphique utilisant la celebre model.Tortue Logo
+ * Description :  Un exemple de programme graphique utilisant la celebre terrain.Tortue Logo
  * Copyright :    Copyright (c) 2000
  * Societe :      LIRMM
  *
@@ -18,21 +18,17 @@ import java.util.Iterator;
  */
 
 public class FeuilleDessin extends JPanel {
-    private ArrayList<TortueTriangleVue> tortuesList; // la liste des tortues enregistrees
+
+    private java.util.List<TortueVue> tortuesList; // la liste des tortues enregistrees
+    private TortueVueFactory tortueFactory;
 
     public FeuilleDessin() {
-        tortuesList = new ArrayList<TortueTriangleVue>();
+        tortuesList = new ArrayList<>();
+        tortueFactory = new TortueVueFactory();
     }
 
     public void addTortue(Tortue tortue) {
-        tortuesList.add(new TortueTriangleVue(tortue));
-    }
-
-    public void reset() {
-        for (Iterator iterateur = tortuesList.iterator(); iterateur.hasNext(); ) {
-            TortueTriangleVue tortueVue = (TortueTriangleVue) iterateur.next();
-            tortueVue.tortue.reset();
-        }
+        tortuesList.add(tortueFactory.construire(tortue));
     }
 
 
@@ -49,10 +45,9 @@ public class FeuilleDessin extends JPanel {
         showTurtles(g);
     }
 
-    public void showTurtles(Graphics g) {
-        for (Iterator iterateur = tortuesList.iterator(); iterateur.hasNext(); ) {
-            TortueTriangleVue tortueVue = (TortueTriangleVue) iterateur.next();
-            tortueVue.drawTurtleCerfVolant(g);
+    public void showTurtles(Graphics graphic) {
+        for (TortueVue tortue : tortuesList) {
+            tortue.drawTurtle(graphic);
         }
     }
 
