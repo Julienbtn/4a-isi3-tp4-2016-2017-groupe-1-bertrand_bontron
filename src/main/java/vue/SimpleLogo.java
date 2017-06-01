@@ -7,23 +7,8 @@ import model.Tortue;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Observable;
-import java.util.Observer;
-
-
-/*************************************************************************
-
- Un petit Logo minimal qui devra etre ameliore par la suite
-
- J. Ferber - 1999-2001
-
- Cours de DESS TNI - Montpellier II
-
- @version 2.0
- @date 25/09/
-
-
- **************************************************************************/
+import java.util.*;
+import java.util.List;
 
 
 public class SimpleLogo extends JFrame implements Observer {
@@ -90,11 +75,9 @@ public class SimpleLogo extends JFrame implements Observer {
         JComboBox colorList = new JComboBox(colorStrings);
         toolBar.add(colorList);
 
-        colorList.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JComboBox comboBox = (JComboBox) e.getSource();
-                myself.couleurSelectionneeId = comboBox.getSelectedIndex();
-            }
+        colorList.addActionListener(event -> {
+            JComboBox comboBox = (JComboBox) event.getSource();
+            myself.couleurSelectionneeId = comboBox.getSelectedIndex();
         });
 
 
@@ -155,17 +138,6 @@ public class SimpleLogo extends JFrame implements Observer {
     }
 
 
-
-
-    // efface tout et reinitialise la feuille
-    public void effacer() {
-        // @todo
-    }
-
-    public void ajouter() {
-        feuille.repaint();
-    }
-
     //utilitaires pour installer des boutons et des menus
     public void addButton(JComponent p, String nom, String tooltiptext, String imageName) {
         JButton bouton;
@@ -211,6 +183,8 @@ public class SimpleLogo extends JFrame implements Observer {
     public void update(Observable observable, Object complement) {
         if (observable instanceof Terrain && complement instanceof Tortue) {
             this.addTortue((Tortue) complement);
+        }else if (observable instanceof Terrain && complement instanceof List) {
+            this.feuille.vider();
         }
         this.repaint();
     }

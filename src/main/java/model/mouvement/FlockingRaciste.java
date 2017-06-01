@@ -4,7 +4,7 @@ package model.mouvement;
 import model.Terrain;
 import model.Tortue;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public class FlockingRaciste extends Flocking {

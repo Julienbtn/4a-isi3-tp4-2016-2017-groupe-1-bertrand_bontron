@@ -1,7 +1,6 @@
 package vue;
 
 import model.Tortue;
-import vue.tortue.TortueRondVue;
 import vue.tortue.TortueTriangleVue;
 import vue.tortue.TortueVue;
 
@@ -14,10 +13,11 @@ public class TortueVueFactory {
         System.out.println(className);
         System.out.println(TortueVue.class.getName());
         try {
-            Class<? extends TortueVue> classe = Class.forName("vue.tortue." + className + "Vue").asSubclass(TortueVue.class);
+            Class<? extends TortueVue> classe = Class.forName("vue.tortue." + className + "Vue")
+                    .asSubclass(TortueVue.class);
             return classe.getConstructor(Tortue.class).newInstance(tortue);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            System.out.println("Fail");
+            System.out.println(String.format("Classe non supportée \"%s\"", className));
             return new TortueTriangleVue(tortue);
         }
     }

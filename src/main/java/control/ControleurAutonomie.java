@@ -1,9 +1,12 @@
 package control;
 
 
+import control.handler.ResetHandler;
 import model.Terrain;
 
 public class ControleurAutonomie extends ControleurTortue {
+
+    public static int FPS = 60;
 
     private Thread thread;
 
@@ -16,7 +19,7 @@ public class ControleurAutonomie extends ControleurTortue {
             while (true) {
                 myself.bouger();
                 try {
-                    Thread.sleep(28);
+                    Thread.sleep(1000 / FPS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

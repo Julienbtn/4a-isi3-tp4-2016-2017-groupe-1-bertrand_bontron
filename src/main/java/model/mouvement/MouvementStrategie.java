@@ -2,7 +2,7 @@ package model.mouvement;
 
 import model.Tortue;
 
-public abstract class MouvementStrategie {
+public interface MouvementStrategie {
 
-    public abstract void bouger(Tortue tortue);
+    void bouger(Tortue tortue);
 }

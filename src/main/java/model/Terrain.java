@@ -34,7 +34,6 @@ public class Terrain extends Observable {
     public void addTortue(Tortue tortue) {
         if (!tortues.contains(tortue)) {
             tortues.add(tortue);
-
             this.notifyObservers(tortue);
         }
     }
@@ -43,14 +42,17 @@ public class Terrain extends Observable {
         for (Tortue tortue : tortues){
             tortue.avancer();
         }
-
         notifyObservers();
     }
 
     public void avancerTortue(int tortueId){
         tortues.get(tortueId).avancer();
-
         notifyObservers();
+    }
+
+    public void reset(){
+        this.tortues = new ArrayList<>();
+        notifyObservers(this.tortues);
     }
 
     public int getLargeur() {
@@ -62,18 +64,18 @@ public class Terrain extends Observable {
     }
 
     public Tortue getTortueProche(int x, int y) {
-        return getTortueProche(x, y, 10);
+        return getTortueProche(x, y, 1e6);
     }
 
-    public Tortue getTortueProche(int x, int y, double distanceMin) {
+    public Tortue getTortueProche(int x, int y, double distanceMax) {
 
         Tortue proche = null;
-        distanceMin = distanceMin * distanceMin;
+        distanceMax = distanceMax * distanceMax;
         for (Tortue courante : tortues) {
             double distance = courante.distance2(x, y);
-            if (distance < distanceMin) {
+            if (distance < distanceMax) {
                 proche = courante;
-                distanceMin = distance;
+                distanceMax = distance;
             }
         }
         return proche;

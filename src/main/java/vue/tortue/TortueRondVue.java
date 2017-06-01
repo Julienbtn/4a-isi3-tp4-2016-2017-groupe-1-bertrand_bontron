@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class TortueRondVue extends TortueVue {
 
+    private static final int RAYON = 7;
+
     public TortueRondVue(Tortue tortue) {
         super(tortue);
     }
@@ -14,13 +16,8 @@ public class TortueRondVue extends TortueVue {
     @Override
     public void drawTurtle (Graphics g) {
 
-        // la position de la tortue p
-        int x = tortue.getX();
-        int y = tortue.getY();
-
-
         g.setColor(tortue.getColor());
-        g.fillOval(x,y,rp,rp);
+        g.fillOval(tortue.getX(), tortue.getY(), RAYON, RAYON);
 
     }
 }

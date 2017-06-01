@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 public class SpiralHandler implements ActionHandler {
     @Override
     public void handle(Controleur controleur, Terrain model, SimpleLogo vue, ActionEvent event) {
-        ((ControleurManuel)controleur).getTortueCourante().spiral(50, 40, 6);
+        ((ControleurManuel)controleur).getTortueCourante().spiral(40, 6);
         model.notifyObservers();
     }
 

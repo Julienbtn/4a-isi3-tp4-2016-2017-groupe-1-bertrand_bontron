@@ -1,4 +1,4 @@
-package vue;// package logo;
+package vue;
 
 import model.Tortue;
 import vue.tortue.TortueVue;
@@ -7,15 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
- * Titre :        Logo
- * Description :  Un exemple de programme graphique utilisant la celebre terrain.Tortue Logo
- * Copyright :    Copyright (c) 2000
- * Societe :      LIRMM
- *
- * @author J. Ferber
- * @version 2.0
- */
 
 public class FeuilleDessin extends JPanel {
 
@@ -51,4 +42,7 @@ public class FeuilleDessin extends JPanel {
         }
     }
 
+    public void vider() {
+        this.tortuesList = new ArrayList<>();
+    }
 }

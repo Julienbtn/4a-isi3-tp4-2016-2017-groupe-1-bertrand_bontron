@@ -49,8 +49,6 @@ public abstract class Controleur extends MouseAdapter implements ActionListener 
 
     public void mouseClicked(MouseEvent event){};
 
-
-
     public void setVue(SimpleLogo vue) {
         this.vue = vue;
     }

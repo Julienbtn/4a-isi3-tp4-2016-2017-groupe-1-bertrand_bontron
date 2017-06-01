@@ -4,7 +4,7 @@ import model.Terrain;
 import model.Tortue;
 
 
-public class Rectiligne extends MouvementStrategie {
+public class Rectiligne implements MouvementStrategie {
 
     private Terrain terrain;
 
@@ -13,7 +13,7 @@ public class Rectiligne extends MouvementStrategie {
     }
 
 
-    @Override
+
     public void bouger(Tortue tortue) {
         int x = Math.floorMod((int) Math.round(tortue.getX() + tortue.getVitesse() * Math.cos(Math.toRadians(tortue.getDirection()))),
                 terrain.getLargeur());

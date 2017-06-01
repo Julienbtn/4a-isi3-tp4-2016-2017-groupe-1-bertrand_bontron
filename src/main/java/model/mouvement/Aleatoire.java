@@ -5,9 +5,7 @@ import model.Tortue;
 
 import java.util.Random;
 
-public class Aleatoire extends MouvementStrategie {
-
-    protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
+public class Aleatoire implements MouvementStrategie {
 
     protected Terrain terrain;
     protected Random aleatoire;
@@ -17,18 +15,25 @@ public class Aleatoire extends MouvementStrategie {
         aleatoire = new Random();
     }
 
-    @Override
+
     public void bouger(Tortue tortue) {
 
 
         int variationAngle = aleatoire.nextInt(20) - 10;
+        double direction  = tortue.getDirection() + variationAngle;
+        double directionRad = Math.toRadians(direction);
+        double vitesse = tortue.getVitesse();
 
-        tortue.setDirection(tortue.getDirection() + variationAngle);
+        tortue.setDirection(direction);
 
-        int x = Math.floorMod((int) Math.round(tortue.getX() + tortue.getVitesse() * Math.cos(ratioDegRad * tortue.getDirection())),
-                terrain.getLargeur());
-        int y = Math.floorMod((int) Math.round(tortue.getY() + tortue.getVitesse() * Math.sin(ratioDegRad * tortue.getDirection())),
-                terrain.getHauteur());
+        int x = Math.floorMod(
+                (int) Math.round(tortue.getX() + vitesse * Math.cos(directionRad)),
+                terrain.getLargeur()
+        );
+        int y = Math.floorMod(
+                (int) Math.round(tortue.getY() + vitesse * Math.sin(directionRad)),
+                terrain.getHauteur()
+        );
 
         tortue.setPosition(x, y);
     }

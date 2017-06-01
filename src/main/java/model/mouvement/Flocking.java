@@ -6,7 +6,7 @@ import model.Tortue;
 import java.util.List;
 
 
-public class Flocking extends MouvementStrategie {
+public class Flocking implements MouvementStrategie {
 
     private static int MAX_VITESSE = 3;
     private static int MAX_FORCE = 50;
@@ -24,7 +24,7 @@ public class Flocking extends MouvementStrategie {
         this.rayonTropProche = 40;
     }
 
-    @Override
+
     public void bouger(Tortue tortue) {
 
         int currX = tortue.getX();

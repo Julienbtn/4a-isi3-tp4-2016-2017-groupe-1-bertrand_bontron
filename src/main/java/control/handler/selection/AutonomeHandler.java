@@ -14,7 +14,9 @@ import java.awt.event.ActionEvent;
 import java.util.Random;
 
 public class AutonomeHandler implements ActionHandler {
+    @Override
     public void handle(Controleur controleur, Terrain model, SimpleLogo vue, ActionEvent event) {
+
         model = new Terrain(600, 400);
         ControleurAutonomie controleurAutonomie = new ControleurAutonomie(model);
         vue = new SimpleLogo(model, controleurAutonomie);

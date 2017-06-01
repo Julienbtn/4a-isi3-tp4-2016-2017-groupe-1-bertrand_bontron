@@ -1,5 +1,6 @@
 package control;
 
+import control.handler.*;
 import model.Terrain;
 import model.Tortue;
 
@@ -12,6 +13,14 @@ public class ControleurManuel extends ControleurTortue {
 
     public ControleurManuel(Terrain model) {
         super(model);
+
+        overrideActionHandler("Avancer", new AvancerHandler());
+        overrideActionHandler("Gauche", new GaucheHandler());
+        overrideActionHandler("Droite", new DroiteHandler());
+        overrideActionHandler("Carré", new CarreHandler());
+        overrideActionHandler("Polygone", new PolyHandler());
+        overrideActionHandler("Spiral", new SpiralHandler());
+        overrideActionHandler("Ajouter", new AjouterHandler());
     }
 
     public void addTortue(Tortue tortue){
@@ -25,7 +34,7 @@ public class ControleurManuel extends ControleurTortue {
     }
 
     public void mouseClicked(MouseEvent event) {
-        Tortue tortue = terrain.getTortueProche(event.getX(), event.getY());
+        Tortue tortue = terrain.getTortueProche(event.getX(), event.getY(), 10);
         if (tortue != null) {
             tortueCourante = tortue;
             System.out.println("Nouvelle tortue");

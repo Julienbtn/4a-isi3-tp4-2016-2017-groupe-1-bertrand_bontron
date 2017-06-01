@@ -1,32 +1,11 @@
-package model;// package logo;
+package model;
+
 
 import model.mouvement.MouvementStrategie;
-import vue.tortue.TortueTriangleVue;
-
 import java.awt.*;
-import java.util.Observable;
-
-
-/*************************************************************************
-
- Un petit Logo minimal qui devra etre ameliore par la suite
-
- Source originale : J. Ferber - 1999-2001
-
- Cours de DESS TNI - Montpellier II
-
- @version 2.0
- @date 25/09/2001
-
- **************************************************************************/
 
 
 public abstract class Tortue {
-
-    protected static final int rp = 10, rb = 5; // Taille de la pointe et de la base de la fleche
-    private static final Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.red,
-            Color.green, Color.lightGray, Color.magenta, Color.orange, Color.gray,
-            Color.pink, Color.yellow};
 
     protected int x;
     protected int y;
@@ -59,16 +38,10 @@ public abstract class Tortue {
     }
 
 
-
-    public void setMouvement(MouvementStrategie mouvement) {
-        this.mouvement = mouvement;
-    }
-
-
     public void reset() {
         x = 0;
         y = 0;
-        direction = -90;
+        direction = 0;
         vitesse = 10;
     }
 
@@ -106,8 +79,8 @@ public abstract class Tortue {
         this.vitesse = vitesse;
     }
 
-    public void setColor(Color n) {
-        couleur = n;
+    public void setColor(Color couleur) {
+        this.couleur = couleur;
     }
 
 
@@ -129,31 +102,29 @@ public abstract class Tortue {
      */
 
     public void carre() {
-        for (int i = 0; i < 4; i++) {
+        poly(4);
+    }
+
+    public void poly(int cotes) {
+        for (int j = 0; j < cotes; j++) {
             avancer();
-            droite(90);
+            droite(360 / cotes);
         }
     }
 
-    public void poly(int n, int a) {
-        for (int j = 0; j < a; j++) {
+    public void spiral(int cotes, int angle) {
+        for (int i = 0; i < cotes; i++) {
             avancer();
-            droite(360 / a);
+            droite(360 / angle);
         }
     }
 
-    public void spiral(int n, int k, int a) {
-        for (int i = 0; i < k; i++) {
-            avancer();
-            droite(360 / a);
-            n = n + 1;
-        }
-    }
-
+    // Distance euclidienne à un point
     public Double distance(int x, int y) {
         return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
     }
 
+    // carré de distance euclidienne à un point
     public Double distance2(int x, int y) {
         return Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2);
     }
