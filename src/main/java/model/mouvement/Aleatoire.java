@@ -10,18 +10,18 @@ public class Aleatoire extends MouvementStrategie {
     protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
 
     protected Terrain terrain;
-    protected Random rand;
+    protected Random aleatoire;
 
     public Aleatoire(Terrain terrain) {
         this.terrain = terrain;
-        rand = new Random();
+        aleatoire = new Random();
     }
 
     @Override
     public void bouger(Tortue tortue) {
 
 
-        int variationAngle = rand.nextInt(20) - 10;
+        int variationAngle = aleatoire.nextInt(20) - 10;
 
         tortue.setDirection(tortue.getDirection() + variationAngle);
 

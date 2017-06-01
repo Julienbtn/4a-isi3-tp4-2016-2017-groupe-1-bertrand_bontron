@@ -3,17 +3,16 @@ package model.mouvement;
 import model.Terrain;
 import model.Tortue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class Flocking extends MouvementStrategie {
 
-    private static int MAX_SPEED = 3;
+    private static int MAX_VITESSE = 3;
     private static int MAX_FORCE = 50;
-    private static double COHESION_WEIGHT = 0.1;
-    private static double ALIGNMENT_WEIGHT = 0.1;
-    private static double SEPARATION_WEIGHT = 5;
+    private static double FORCE_COHESION = 0.1;
+    private static double VALEUR_ALIGNEMENT = 0.1;
+    private static double VALEUR_SEPARATION = 5;
 
     protected Terrain terrain;
     protected int rayonVoisin2;
@@ -57,11 +56,11 @@ public class Flocking extends MouvementStrategie {
             // si proche, on approche pas trop
             // sinon (loin) on approche à vitesse max
             if (distance > 50){
-                cohesionX *= MAX_SPEED / 50;
-                cohesionY *= MAX_SPEED / 50;
+                cohesionX *= MAX_VITESSE / 50;
+                cohesionY *= MAX_VITESSE / 50;
             }else{
-                cohesionX *= MAX_SPEED / distance;
-                cohesionY *= MAX_SPEED / distance;
+                cohesionX *= MAX_VITESSE / distance;
+                cohesionY *= MAX_VITESSE / distance;
             }
         }else{
             cohesionX = 0;
@@ -119,19 +118,19 @@ public class Flocking extends MouvementStrategie {
 
 
         // ajoute influence des voisins
-        movX += (cohesionX * COHESION_WEIGHT) +
-                (alignementX * ALIGNMENT_WEIGHT) +
-                (separationX * SEPARATION_WEIGHT);
-        movY += (cohesionY * COHESION_WEIGHT) +
-                (alignementY * ALIGNMENT_WEIGHT) +
-                (separationY * SEPARATION_WEIGHT);
+        movX += (cohesionX * FORCE_COHESION) +
+                (alignementX * VALEUR_ALIGNEMENT) +
+                (separationX * VALEUR_SEPARATION);
+        movY += (cohesionY * FORCE_COHESION) +
+                (alignementY * VALEUR_ALIGNEMENT) +
+                (separationY * VALEUR_SEPARATION);
 
         // limite la vitesse
         double norme = Math.sqrt(movX * movX + movY * movY);
-        if (norme > MAX_SPEED){
-            movX *= MAX_SPEED / norme;
-            movY *= MAX_SPEED / norme;
-            norme = MAX_SPEED;
+        if (norme > MAX_VITESSE){
+            movX *= MAX_VITESSE / norme;
+            movY *= MAX_VITESSE / norme;
+            norme = MAX_VITESSE;
         }
         // update vitesse / direction /  position
         tortue.setVitesse(norme);

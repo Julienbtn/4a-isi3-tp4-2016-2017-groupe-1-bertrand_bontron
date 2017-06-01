@@ -5,7 +5,6 @@ import model.Terrain;
 import model.Tortue;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FlockingRaciste extends Flocking {
@@ -19,10 +18,10 @@ public class FlockingRaciste extends Flocking {
         int currX = tortue.getX();
         int currY = tortue.getY();
         Color color = tortue.getColor();
-        return terrain.filtrerTortues((Tortue t) -> (
-                t != tortue
-                        && t.getColor().equals(color)
-                        && t.distance2(currX, currY) <= rayonVoisin2
+        return terrain.filtrerTortues((Tortue tortue1) -> (
+                tortue1 != tortue
+                        && tortue1.getColor().equals(color)
+                        && tortue1.distance2(currX, currY) <= rayonVoisin2
         ));
     }
 }

@@ -1,6 +1,5 @@
 package control;
 
-import control.Controleur;
 import model.Terrain;
 import model.Tortue;
 
