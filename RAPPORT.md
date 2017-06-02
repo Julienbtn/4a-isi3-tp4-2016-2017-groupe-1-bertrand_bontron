@@ -21,92 +21,91 @@ String[] colorStrings = {"noir", "bleu", "cyan","gris fonce","rouge","vert", "gr
 ``` 
 dépend de l'ordre où sont lister les couleurs.
     * la fonction actonPerformed n'est pas SOLID car elle ne permet pas d'ajouter de nouvelles fonctionnalités : 
- ```
-    public void actionPerformed(ActionEvent e)
-       	{
-       		String c = e.getActionCommand();
-       
-       		// actions des boutons du haut
-       		if (c.equals("Avancer")) {
-       			System.out.println("command avancer");
-       			try {
-       				int v = Integer.parseInt(inputValue.getText());
-       				courante.avancer(v);
-       			} catch (NumberFormatException ex){
-       				System.err.println("ce n'est pas un nombre : " + inputValue.getText());
-       			}
-       			
-       		}
-       		else if (c.equals("Droite")) {
-       			try {
-       				int v = Integer.parseInt(inputValue.getText());
-       				courante.droite(v);
-       			} catch (NumberFormatException ex){
-       				System.err.println("ce n'est pas un nombre : " + inputValue.getText());
-       			}
-       		}
-       		else if (c.equals("Gauche")) {
-       			try {
-       				int v = Integer.parseInt(inputValue.getText());
-       				courante.gauche(v);
-       			} catch (NumberFormatException ex){
-       				System.err.println("ce n'est pas un nombre : " + inputValue.getText());
-       			}
-       		}
-       		else if (c.equals("Lever")) 
-       			courante.leverCrayon();
-       		else if (c.equals("Baisser"))
-       			courante.baisserCrayon();
-       		// actions des boutons du bas
-       		else if (c.equals("Proc1"))
-       			proc1();
-       		else if (c.equals("Proc2"))
-       			proc2();
-       		else if (c.equals("Proc3"))
-       			proc3();
-       		else if (c.equals("Effacer"))
-       			effacer();
-       		else if (c.equals("Quitter"))
-       			quitter();
-       
-       		feuille.repaint();
-       	}
+ ```java
+public void actionPerformed(ActionEvent e) {
+	String c = e.getActionCommand();
+
+	// actions des boutons du haut
+	if (c.equals("Avancer")) {
+		System.out.println("command avancer");
+		try {
+			int v = Integer.parseInt(inputValue.getText());
+			courante.avancer(v);
+		} catch (NumberFormatException ex){
+			System.err.println("ce n'est pas un nombre : " + inputValue.getText());
+		}
+		
+	}
+	else if (c.equals("Droite")) {
+		try {
+			int v = Integer.parseInt(inputValue.getText());
+			courante.droite(v);
+		} catch (NumberFormatException ex){
+			System.err.println("ce n'est pas un nombre : " + inputValue.getText());
+		}
+	}
+	else if (c.equals("Gauche")) {
+		try {
+			int v = Integer.parseInt(inputValue.getText());
+			courante.gauche(v);
+		} catch (NumberFormatException ex){
+			System.err.println("ce n'est pas un nombre : " + inputValue.getText());
+		}
+	}
+	else if (c.equals("Lever")) 
+		courante.leverCrayon();
+	else if (c.equals("Baisser"))
+		courante.baisserCrayon();
+	// actions des boutons du bas
+	else if (c.equals("Proc1"))
+		proc1();
+	else if (c.equals("Proc2"))
+		proc2();
+	else if (c.equals("Proc3"))
+		proc3();
+	else if (c.equals("Effacer"))
+		effacer();
+	else if (c.equals("Quitter"))
+		quitter();
+
+	feuille.repaint();
+}
 ```
 * Dans la classe Tortue:
     * la fonction decodeColor n'est pas SOLID car elle ne permet pas d'ajouter de nouvelles fonctionnalités :
-```
-     protected Color decodeColor(int c) {
-     		switch(c) {
-     			case 0: return(Color.black);
-     			case 1: return(Color.blue);
-     			case 2: return(Color.cyan);
-     			case 3: return(Color.darkGray);
-     			case 4: return(Color.red);
-     			case 5: return(Colonr.green);
-     			case 6: return(Color.lightGray);
-     			case 7: return(Color.magenta);
-     			case 8: return(Color.orange);
-     			case 9: return(Color.gray);
-     			case 10: return(Color.pink);
-     			case 11: return(Color.yellow);
-     			default : return(Color.black);
-     		}
-     	}
+```java
+protected Color decodeColor(int c) {
+	switch(c) {
+		case 0: return(Color.black);
+		case 1: return(Color.blue);
+		case 2: return(Color.cyan);
+		case 3: return(Color.darkGray);
+		case 4: return(Color.red);
+		case 5: return(Colonr.green);
+		case 6: return(Color.lightGray);
+		case 7: return(Color.magenta);
+		case 8: return(Color.orange);
+		case 9: return(Color.gray);
+		case 10: return(Color.pink);
+		case 11: return(Color.yellow);
+		default : return(Color.black);
+	}
+}
 ```
     * la fonction couleurSuivante n'est pas appelée dans la fonction spiral
-```
-    public void couleurSuivante() {
-    	 	couleur(coul+1);
-    	}
-    	
-    public void spiral(int n, int k, int a) {
-        	for (int i = 0; i < k; i++) {
-        			couleur(coul+1);
-        			avancer(n);
-        			droite(360/a);
-        			n = n+1;
-        	}
-        }
+```java
+public void couleurSuivante() {
+	couleur(coul+1);
+}
+
+public void spiral(int n, int k, int a) {
+	for (int i = 0; i < k; i++) {
+			couleur(coul+1);
+			avancer(n);
+			droite(360/a);
+			n = n+1;
+	}
+}
 ```
     
     
